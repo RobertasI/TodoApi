@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Todo.DataService;
+using Todo.DataService.DataServices;
+using Todo.Domain;
 
 namespace TodoApi
 {
@@ -28,6 +30,9 @@ namespace TodoApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TodoContext>(opts => opts.UseMySql(Configuration["ConnectionString:TodosDB"]));
+            services.AddScoped<IDataService<User>, UserDataService>();
+            services.AddScoped<IDataService<Todo.Domain.Todo>, TodoDataService>();
+            services.AddScoped<IDataService<TodoList>, TodoListDataService>();
 
             services.AddControllers();
 

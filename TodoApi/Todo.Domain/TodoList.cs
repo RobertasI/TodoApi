@@ -10,6 +10,11 @@ namespace Todo.Domain
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long TodoListId { get; set; }
 
+        public User User { get; set; }
+
+        [ForeignKey("User")]
+        public long UserId { get; set; }
+
         public List<Todo> Todos { get; set; }
     }
 }
