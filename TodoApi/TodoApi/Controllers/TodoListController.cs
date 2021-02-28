@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Todo.DataService.DataServices;
 using Todo.Domain;
 
 namespace TodoApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TodoListController : ControllerBase
@@ -22,7 +24,7 @@ namespace TodoApi.Controllers
             return Ok(todoLists);
         }
         // GET: api/TodoList/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetTodoList")]
         public IActionResult Get(long id)
         {
             TodoList todoList = _dataService.Get(id);

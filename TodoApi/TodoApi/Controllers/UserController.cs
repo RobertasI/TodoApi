@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Todo.DataService.DataServices;
 using Todo.Domain;
 
 namespace TodoApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -16,13 +18,15 @@ namespace TodoApi.Controllers
         }
         // GET: api/User
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Get()
         {
             IEnumerable<User> users = _dataService.GetAll();
             return Ok(users);
         }
+
         // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetUser")]
         public IActionResult Get(long id)
         {
             User user = _dataService.Get(id);

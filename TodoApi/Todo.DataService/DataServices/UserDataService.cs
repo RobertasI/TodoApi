@@ -5,7 +5,20 @@ using Todo.Domain;
 
 namespace Todo.DataService
 {
-    public class UserDataService : IDataService<User>
+    public interface IUserDataService<T>
+    {
+        T GetByEmail(string email);
+
+        bool IsPasswordValid(User user, string password);
+
+        int GetRole(User user);
+
+        bool CanUserViewTodo(User user, Todo.Domain.Todo todo);
+
+    }
+
+
+    public class UserDataService : IDataService<User>, IUserDataService<User>
     {
         readonly TodoContext _todoContext;
 
@@ -23,6 +36,7 @@ namespace Todo.DataService
             return _todoContext.User
                   .FirstOrDefault(e => e.UserId == id);
         }
+
         public void Add(User entity)
         {
             _todoContext.User.Add(entity);
@@ -41,5 +55,37 @@ namespace Todo.DataService
             _todoContext.User.Remove(user);
             _todoContext.SaveChanges();
         }
+
+        public User GetByEmail(string email)
+        {
+            return _todoContext.User
+                  .FirstOrDefault(e => e.Email == email);
+        }
+
+        public bool IsPasswordValid(User user, string password)
+        {
+            return user.Password == password;
+        }
+
+        public int GetRole(User user)
+        {
+            return user.UserRole;
+        }
+
+        public bool CanUserViewTodo(User user, Todo.Domain.Todo todo)
+        {
+            var userList = _todoContext.TodoList.FirstOrDefault(u => u.UserId == user.UserId);
+
+            if (userList != null)
+            {
+                return userList.TodoListId == todo.TodoListId;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
     }
 }
