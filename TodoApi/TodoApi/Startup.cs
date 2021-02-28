@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Todo.DataService;
 using Todo.DataService.DataServices;
 using Todo.Domain;
+using TodoApi.EmailService;
 
 namespace TodoApi
 {
@@ -61,6 +62,7 @@ namespace TodoApi
             services.AddScoped<IDataService<Todo.Domain.Todo>, TodoDataService>();
             services.AddScoped<IDataService<TodoList>, TodoListDataService>();
             services.AddScoped<IUserDataService<User>, UserDataService>();
+            services.AddScoped<IMailer, Mailer>();
 
             services.AddControllers();
 
