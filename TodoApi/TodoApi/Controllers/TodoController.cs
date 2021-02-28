@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using Todo.DataService;
 using Todo.DataService.DataServices;
 using Todo.Domain;
@@ -48,13 +46,13 @@ namespace TodoApi.Controllers
 
             if(user.UserRole == 1)
             {
-                return Ok(todo);
+                return Ok(todo.Text);
             }
             else
             {
                 if (_userDataService.CanUserManageTodo(user, todo))
                 {
-                    return Ok(todo);
+                    return Ok(todo.Text);
                 }
                 else
                 {

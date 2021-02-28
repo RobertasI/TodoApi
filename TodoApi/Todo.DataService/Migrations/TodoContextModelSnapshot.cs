@@ -93,7 +93,8 @@ namespace Todo.DataService.Migrations
 
                     b.HasKey("TodoListId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("TodoList");
 
@@ -165,8 +166,8 @@ namespace Todo.DataService.Migrations
             modelBuilder.Entity("Todo.Domain.TodoList", b =>
                 {
                     b.HasOne("Todo.Domain.User", "User")
-                        .WithMany("TodoList")
-                        .HasForeignKey("UserId")
+                        .WithOne("TodoList")
+                        .HasForeignKey("Todo.Domain.TodoList", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

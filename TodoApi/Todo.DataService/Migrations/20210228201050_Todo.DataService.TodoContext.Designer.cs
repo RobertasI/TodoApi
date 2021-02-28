@@ -8,8 +8,8 @@ using Todo.DataService;
 namespace Todo.DataService.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20210226132048_Todo.DataService.TodoContextSeed2")]
-    partial class TodoDataServiceTodoContextSeed2
+    [Migration("20210228201050_Todo.DataService.TodoContext")]
+    partial class TodoDataServiceTodoContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,7 +95,8 @@ namespace Todo.DataService.Migrations
 
                     b.HasKey("TodoListId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("TodoList");
 
@@ -167,8 +168,8 @@ namespace Todo.DataService.Migrations
             modelBuilder.Entity("Todo.Domain.TodoList", b =>
                 {
                     b.HasOne("Todo.Domain.User", "User")
-                        .WithMany("TodoList")
-                        .HasForeignKey("UserId")
+                        .WithOne("TodoList")
+                        .HasForeignKey("Todo.Domain.TodoList", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

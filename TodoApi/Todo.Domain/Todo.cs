@@ -13,6 +13,8 @@ namespace Todo.Domain
 
         public bool IsDone { get; set; }
 
+        public TodoList TodoList { get; set; }
+
         [ForeignKey("TodoList")]
         public long TodoListId { get; set; }
     }
