@@ -13,7 +13,9 @@ namespace Todo.DataService
 
         int GetRole(User user);
 
-        bool CanUserViewTodo(User user, Todo.Domain.Todo todo);
+        bool CanUserManageTodo(User user, Todo.Domain.Todo todo);
+
+        long GetUsersTodoListId(User user);
 
     }
 
@@ -72,7 +74,7 @@ namespace Todo.DataService
             return user.UserRole;
         }
 
-        public bool CanUserViewTodo(User user, Todo.Domain.Todo todo)
+        public bool CanUserManageTodo(User user, Todo.Domain.Todo todo)
         {
             var userList = _todoContext.TodoList.FirstOrDefault(u => u.UserId == user.UserId);
 
@@ -87,5 +89,9 @@ namespace Todo.DataService
 
         }
 
+        public long GetUsersTodoListId(User user)
+        {
+            return _todoContext.TodoList.FirstOrDefault(u => u.UserId == user.UserId).TodoListId;
+        }
     }
 }

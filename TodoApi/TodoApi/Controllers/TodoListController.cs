@@ -6,7 +6,7 @@ using Todo.Domain;
 
 namespace TodoApi.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class TodoListController : ControllerBase

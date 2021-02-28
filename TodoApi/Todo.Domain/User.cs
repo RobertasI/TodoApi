@@ -17,6 +17,8 @@ namespace Todo.Domain
 
         public int UserRole { get; set; }
 
-        public List<TodoList> TodoList { get; set; }
+        public TodoList TodoList { get; set; }
+
+
     }
 }
